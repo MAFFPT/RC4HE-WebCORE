@@ -10,7 +10,7 @@ RUN apt-get update \
     && apt-get -y upgrade \
     && apt-get -y install apache2 git \
     && a2enmod rewrite \
-    && a2enmod ssl 
+    && a2enmod ssl
 
 # send logs to stdout get webcore code. generate crt
 RUN ln -sf /dev/stdout /var/log/apache2/access.log \
@@ -25,6 +25,15 @@ RUN ln -sf /dev/stdout /var/log/apache2/access.log \
 
 # add apache conf
 COPY webcore-apache.conf /etc/apache2/sites-enabled/000-default.conf
+
+# Install WebCoRE local
+RUN cd ~/ \
+    && git clone https://github.com/imnotbob/webCoRE \
+    && cd webCoRE \
+    && git checkout hubitat-patches \
+    && cd dashboard \
+    && sudo ln -spwd/var/www/webcore
+
 
 EXPOSE 443
 
