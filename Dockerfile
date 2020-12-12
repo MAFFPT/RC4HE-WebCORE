@@ -6,9 +6,7 @@ WORKDIR /var/www
 
 # Update and upgrade
 # install apache and mods
-RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get -y install apache2 git \
+RUN apt-get install apache2 -y \
     && a2enmod rewrite \
     && a2enmod ssl
 
