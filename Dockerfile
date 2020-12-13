@@ -4,7 +4,6 @@ MAINTAINER Marco Felicio maffpt@gmail.com (branch from Bill McGair bill@mcgair.c
 ARG MY_CN
 WORKDIR /var/www
 
-# Update and upgrade
 # install apache and mods
 RUN apt-get install apache2 -y \
     && a2enmod rewrite \
@@ -14,9 +13,10 @@ RUN apt-get install apache2 -y \
 RUN ln -sf /dev/stdout /var/log/apache2/access.log \
     && ln -sf /dev/stdout /var/log/apache2/error.log
 
-# get WebCoRE code
-RUN git clone https://github.com/ajayjohn/webCoRE \
-    && cd webCoRE \
+# get WebCoRE code adapted to HE environment
+RUN mkdir WebCoRE \
+    && cd WebCoRE \
+    && git clone https://github.com/ajayjohn/webCoRE \
     && git checkout hubitat-patches \
     && cd ../ \
     && ln -s webCoRE/dashboard webcore
